@@ -13,8 +13,14 @@ const oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
 function getNewToken() {
     const authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/youtube.force-ssl']
+        scope: [
+            'https://www.googleapis.com/auth/youtube.readonly',
+            'https://www.googleapis.com/auth/yt-analytics.readonly',
+            'https://www.googleapis.com/auth/youtube',
+            'https://www.googleapis.com/auth/youtube.force-ssl'
+        ]
     });
+
     console.log('Authorize this app by visiting this URL:', authUrl);
 
     const rl = readline.createInterface({
@@ -22,7 +28,7 @@ function getNewToken() {
         output: process.stdout
     });
 
-    rl.question('Enter the code from that page here: ', function(code) {
+    rl.question('Enter the codee: ', function(code) {
         rl.close();
         oauth2Client.getToken(code, (err, token) => {
             if (err) {
